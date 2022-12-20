@@ -1,3 +1,8 @@
+--created by Happppya#6091
+--universal hitbox script
+--dont edit the script unless you know what you are doing, you can adjust settings in game
+--runs on all executors (i think)
+
 --get library and create window 
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
 local Window = Library.CreateLib("Hyper Happy Hax", "Midnight")
