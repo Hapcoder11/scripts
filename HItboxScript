@@ -1,0 +1,201 @@
+--get library and create window 
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local Window = Library.CreateLib("Hyper Happy Hax", "Midnight")
+HeadHitboxes = Window:NewTab("Head Hitboxes")
+RootHitboxes = Window:NewTab("Root Part Hitboxes")
+
+HumanoidRootPartSection = RootHitboxes:NewSection("Made by Happppya#6091")
+
+HeadSection = HeadHitboxes:NewSection("Made by Happppya#6091")
+do 
+--HEAD SECTION
+
+--doing head section first
+
+--these are DEFAULT values
+
+getgenv().HeadHitbox = false
+getgenv().HeadHitboxRate = 0.5
+getgenv().HeadHitboxSize = 35
+getgenv().HeadHitboxTransparency = 0.7
+getgenv().HeadHitboxCanCollide = false
+getgenv().HeadHitboxTargets = "Enemy Teams"
+getgenv().HeadHitboxTargetNPCs = false
+
+local toggleinfohead = "Turns the modification of head hitboxes on or off"
+HeadSection:NewToggle("Script On", toggleinfohead, function(state)
+    
+    getgenv().HeadHitbox = state
+   
+end) -- toggle head hitbox
+
+local toggleinfohead1 = "Toggle target NPCs on or off"
+HeadSection:NewToggle("Target NPCs", toggleinfohead1, function(state)
+    getgenv().HeadHitboxTargetNPCs = state
+    
+end) -- toggle head hitbox
+
+local toggleinfohead2 = "Toggle hitbox collision on or off"
+HeadSection:NewToggle("Hitbox Collision", toggleinfohead2, function(state)
+    getgenv().HeadHitboxCanCollide = state
+    
+end) -- toggle head hitbox
+
+local sliderinfohead = "Speed hitboxes refresh in milliseconds (Low = laggy)"
+HeadSection:NewSlider("Refresh Rate", sliderinfohead, 3000, 30, function(s) -- 3000 (MaxValue) | 0 (MinValue)
+    getgenv().HeadHitboxRate = s/1000
+end) -- refresh rate of head hitbox
+
+local sliderinfohead1 = "Transparency of hitbox"
+HeadSection:NewSlider("Transparency", sliderinfohead1, 100, 0, function(s)
+    getgenv().HeadHitboxTransparency = s/100
+end)
+
+local textboxinfohead = "How big the head hitbox is (Number)"
+HeadSection:NewTextBox("Head Size", textboxinfo, function(txt)
+    local num = tonumber(txt)
+    getgenv().HeadHitboxSize = num
+end)
+
+HeadSection:NewDropdown("Target", "Select enemies or everyone to target", {"Enemy Teams", "All"}, function(currentOption)
+    getgenv().HeadHitboxTargets = currentOption
+end)
+
+
+
+--Main code for head hitboxes
+function editHead(head, plr)
+  
+    if getgenv().HeadHitboxTargets == "Enemy Teams" then
+        if plr and plr.Team and plr.Team == game.Players.LocalPlayer.Team then return end
+    end
+    if plr == game.Players.LocalPlayer then return end
+    head.Transparency = getgenv().HeadHitboxTransparency
+    head.CanCollide = getgenv().HeadHitboxCanCollide
+    local size = getgenv().HeadHitboxSize
+    head.Size = Vector3.new(size,size,size)
+    
+end
+spawn(function()
+while task.wait(getgenv().HeadHitboxRate) do
+    local s,e = pcall(function()
+    
+    if getgenv().HeadHitbox == true then -- if on
+        
+        local loopthrough
+        if getgenv().HeadHitboxTargetNPCs == true then
+            for i,v in pairs(workspace:GetDescendants()) do
+                if v:FindFirstChild("Humanoid") then
+                    editHead(v:FindFirstChild("Head"), game.Players:FindFirstChild(v.Name))
+                end
+               
+            end
+        elseif getgenv().HeadHitboxTargetNPCs == false then
+            for i,v in pairs(game.Players:GetChildren()) do
+                editHead(v.Character:FindFirstChild("Head"), v)
+            end
+        end
+    end
+    end)
+    if e then print(e) end
+end
+end)
+end
+
+do
+
+--HumanoidRootPart SECTION
+
+--doing HumanoidRootPart section first
+
+--these are DEFAULT values
+
+getgenv().HumanoidRootPartHitbox = false
+getgenv().HumanoidRootPartHitboxRate = 0.5
+getgenv().HumanoidRootPartHitboxSize = 35
+getgenv().HumanoidRootPartHitboxTransparency = 0.7
+getgenv().HumanoidRootPartHitboxCanCollide = false
+getgenv().HumanoidRootPartHitboxTargets = "Enemy Teams"
+getgenv().HumanoidRootPartHitboxTargetNPCs = false
+
+local toggleinfoHumanoidRootPart = "Turns the modification of HumanoidRootPart hitboxes on or off"
+HumanoidRootPartSection:NewToggle("Script On", toggleinfoHumanoidRootPart, function(state)
+    
+    getgenv().HumanoidRootPartHitbox = state
+   
+end) -- toggle HumanoidRootPart hitbox
+
+local toggleinfoHumanoidRootPart1 = "Toggle target NPCs on or off"
+HumanoidRootPartSection:NewToggle("Target NPCs", toggleinfoHumanoidRootPart1, function(state)
+    getgenv().HumanoidRootPartHitboxTargetNPCs = state
+    
+end) -- toggle HumanoidRootPart hitbox
+
+local toggleinfoHumanoidRootPart2 = "Toggle hitbox collision on or off"
+HumanoidRootPartSection:NewToggle("Hitbox Collision", toggleinfoHumanoidRootPart2, function(state)
+    getgenv().HumanoidRootPartHitboxCanCollide = state
+    
+end) -- toggle HumanoidRootPart hitbox
+
+local sliderinfoHumanoidRootPart = "Speed hitboxes refresh in milliseconds (Low = laggy)"
+HumanoidRootPartSection:NewSlider("Refresh Rate", sliderinfoHumanoidRootPart, 3000, 30, function(s) -- 3000 (MaxValue) | 0 (MinValue)
+    getgenv().HumanoidRootPartHitboxRate = s/1000
+end) -- refresh rate of HumanoidRootPart hitbox
+
+local sliderinfoHumanoidRootPart1 = "Transparency of hitbox"
+HumanoidRootPartSection:NewSlider("Transparency", sliderinfoHumanoidRootPart1, 100, 0, function(s)
+    getgenv().HumanoidRootPartHitboxTransparency = s/100
+end)
+
+local textboxinfoHumanoidRootPart = "How big the HumanoidRootPart hitbox is (Number)"
+HumanoidRootPartSection:NewTextBox("HumanoidRootPart Size", textboxinfo, function(txt)
+    local num = tonumber(txt)
+    getgenv().HumanoidRootPartHitboxSize = num
+end)
+
+HumanoidRootPartSection:NewDropdown("Target", "Select enemies or everyone to target", {"Enemy Teams", "All"}, function(currentOption)
+    getgenv().HumanoidRootPartHitboxTargets = currentOption
+end)
+
+
+
+--Main code for HumanoidRootPart hitboxes
+function editHumanoidRootPart(HumanoidRootPart, plr)
+  
+    if getgenv().HumanoidRootPartHitboxTargets == "Enemy Teams" then
+        if plr and plr.Team and plr.Team == game.Players.LocalPlayer.Team then return end
+    end
+    if plr == game.Players.LocalPlayer then return end
+    HumanoidRootPart.Transparency = getgenv().HumanoidRootPartHitboxTransparency
+    HumanoidRootPart.CanCollide = getgenv().HumanoidRootPartHitboxCanCollide
+    local size = getgenv().HumanoidRootPartHitboxSize
+    HumanoidRootPart.Size = Vector3.new(size,size,size)
+    
+end
+
+spawn(function()
+while task.wait(getgenv().HumanoidRootPartHitboxRate) do
+    print("done")
+    local s,e = pcall(function()
+    
+    if getgenv().HumanoidRootPartHitbox == true then -- if on
+        
+        local loopthrough
+        if getgenv().HumanoidRootPartHitboxTargetNPCs == true then
+            for i,v in pairs(workspace:GetDescendants()) do
+                if v:FindFirstChild("Humanoid") then
+                    editHumanoidRootPart(v:FindFirstChild("HumanoidRootPart"), game.Players:FindFirstChild(v.Name))
+                end
+               
+            end
+        elseif getgenv().HumanoidRootPartHitboxTargetNPCs == false then
+            for i,v in pairs(game.Players:GetChildren()) do
+                editHumanoidRootPart(v.Character:FindFirstChild("HumanoidRootPart"), v)
+            end
+        end
+    end
+    end)
+    if e then print(e) end
+end
+end)
+end
